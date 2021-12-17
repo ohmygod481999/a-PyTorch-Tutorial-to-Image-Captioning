@@ -177,13 +177,16 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
         # Remove timesteps that we didn't decode at, or are pads
         # pack_padded_sequence is an easy trick to do this
         scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        
         # print("test", test)
         # scores, _ = test
 
         targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+        scores = scores.data
+        targets = targets.data
 
         # Calculate loss
-        loss = criterion(scores.data, targets.data)
+        loss = criterion(scores, targets)
 
         # Add doubly stochastic attention regularization
         loss += alpha_c * ((1. - alphas.sum(dim=1)) ** 2).mean()
