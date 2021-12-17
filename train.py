@@ -176,11 +176,11 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Remove timesteps that we didn't decode at, or are pads
         # pack_padded_sequence is an easy trick to do this
-        test = pack_padded_sequence(scores, decode_lengths, batch_first=True)
-        print("test", test)
-        scores, _ = test
+        scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        # print("test", test)
+        # scores, _ = test
 
-        targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+        targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
 
         # Calculate loss
         loss = criterion(scores, targets)
