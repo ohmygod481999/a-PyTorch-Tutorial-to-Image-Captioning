@@ -164,7 +164,6 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Move to GPU, if available
         imgs = imgs.to(device)
-        print(imgs.shape)
         caps = caps.to(device)
         caplens = caplens.to(device)
 
@@ -177,7 +176,10 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Remove timesteps that we didn't decode at, or are pads
         # pack_padded_sequence is an easy trick to do this
-        scores, _ = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        test = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+        print("test", test)
+        scores, _ = test
+
         targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
 
         # Calculate loss
