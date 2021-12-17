@@ -164,6 +164,7 @@ def train(train_loader, encoder, decoder, criterion, encoder_optimizer, decoder_
 
         # Move to GPU, if available
         imgs = imgs.to(device)
+        print(imgs.shape)
         caps = caps.to(device)
         caplens = caplens.to(device)
 
