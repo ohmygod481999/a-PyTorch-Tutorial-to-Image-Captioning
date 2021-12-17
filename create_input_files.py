@@ -7,5 +7,5 @@ if __name__ == '__main__':
                        image_folder='/content/flickr30k_images/flickr30k_images',
                        captions_per_image=5,
                        min_word_freq=5,
-                       output_folder='./',
+                       output_folder='/content/out',
                        max_len=50)
