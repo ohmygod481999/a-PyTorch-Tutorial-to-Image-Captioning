@@ -11,7 +11,7 @@ from utils import *
 from nltk.translate.bleu_score import corpus_bleu
 
 # Data parameters
-data_folder = '/content/drive/MyDrive/lame_caption_recommendation/out'  # folder with data files saved by create_input_files.py
+data_folder = '/content/out'  # folder with data files saved by create_input_files.py
 data_name = 'flickr30k_5_cap_per_img_5_min_word_freq'  # base name shared by data files
 
 # Model parameters
@@ -273,9 +273,10 @@ def validate(val_loader, encoder, decoder, criterion):
             # Remove timesteps that we didn't decode at, or are pads
             # pack_padded_sequence is an easy trick to do this
             scores_copy = scores.clone()
-            scores, _ = pack_padded_sequence(scores, decode_lengths, batch_first=True)
-            targets, _ = pack_padded_sequence(targets, decode_lengths, batch_first=True)
-
+            scores = pack_padded_sequence(scores, decode_lengths, batch_first=True)
+            targets = pack_padded_sequence(targets, decode_lengths, batch_first=True)
+            scores = scores.data
+            targets = targets.data
             # Calculate loss
             loss = criterion(scores, targets)
 
